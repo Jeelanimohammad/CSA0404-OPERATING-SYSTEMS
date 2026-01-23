@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int buffer = 0, size;
+    int empty, full = 0, mutex = 1;
+    int choice;
+
+    printf("Enter buffer size: ");
+    scanf("%d", &size);
+    empty = size;
+
+    while(1) {
+        printf("\n1. Produce  2. Consume  3. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        if(choice == 1) {
+            if(mutex && empty) {
+                mutex = 0;
+                buffer++;
+                empty--;
+                full++;
+                printf("Produced an item. Buffer = %d\n", buffer);
+                mutex = 1;
+            } else
+                printf("Buffer is FULL\n");
+        }
+
+        else if(choice == 2) {
+            if(mutex && full) {
+                mutex = 0;
+                buffer--;
+                full--;
+                empty++;
+                printf("Consumed an item. Buffer = %d\n", buffer);
+                mutex = 1;
+            } else
+                printf("Buffer is EMPTY\n");
+        }
+
+        else
+            break;
+    }
+    return 0;
+}
