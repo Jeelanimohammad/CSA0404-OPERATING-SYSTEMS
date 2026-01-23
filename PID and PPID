@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main() {
+    pid_t pid;
+    int choice;
+
+    printf("Enter your choice:\n");
+    printf("1. Display Parent Process Details\n");
+    printf("2. Display Child Process Details\n");
+    scanf("%d", &choice);
+
+    pid = fork();
+
+    if (pid > 0) {
+        // Parent process
+        if (choice == 1) {
+            printf("\nParent Process\n");
+            printf("PID  = %d\n", getpid());
+            printf("PPID = %d\n", getppid());
+        }
+        wait(NULL);   // wait for child
+    }
+    else if (pid == 0) {
+        // Child process
+        if (choice == 2) {
+            printf("\nChild Process\n");
+            printf("PID  = %d\n", getpid());
+            printf("PPID = %d\n", getppid());
+        }
+    }
+    else {
+        printf("Fork failed\n");
+    }
+
+    return 0;
+}
