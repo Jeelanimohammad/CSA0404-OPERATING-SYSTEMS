@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+int main() {
+    int n, frames, i, j, k, flag, pos, max, pageFaults = 0;
+
+    // User input for number of pages
+    printf("Enter number of pages: ");
+    scanf("%d", &n);
+    int pages[n];
+
+    printf("Enter the page reference sequence: ");
+    for(i = 0; i < n; i++)
+        scanf("%d", &pages[i]);
+
+    // User input for number of frames
+    printf("Enter number of frames: ");
+    scanf("%d", &frames);
+    int frame[frames];
+    int recent[frames]; // To store how recently each page was used
+
+    // Initialize frames and recent array
+    for(i = 0; i < frames; i++) {
+        frame[i] = -1;
+        recent[i] = -1;
+    }
+
+    printf("\nPage\tFrames\n");
+    for(i = 0; i < n; i++) {
+        flag = 0;
+
+        // Check if page is already in frame
+        for(j = 0; j < frames; j++) {
+            if(frame[j] == pages[i]) {
+                flag = 1;
+                recent[j] = i; // Update recent usage
+                break;
+            }
+        }
+
+        if(flag == 0) {
+            pageFaults++;
+
+            // Find empty frame
+            for(j = 0; j < frames; j++) {
+                if(frame[j] == -1) {
+                    frame[j] = pages[i];
+                    recent[j] = i;
+                    flag = 1;
+                    break;
+                }
+            }
+
+            // If no empty frame, replace least recently used
+            if(flag == 0) {
+                max = 0;
+                for(j = 1; j < frames; j++) {
+                    if(recent[j] < recent[max])
+                        max = j;
+                }
+                frame[max] = pages[i];
+                recent[max] = i;
+            }
+        }
+
+        // Display current frame status
+        printf("%d\t", pages[i]);
+        for(j = 0; j < frames; j++) {
+            if(frame[j] != -1)
+                printf("%d ", frame[j]);
+            else
+                printf("- ");
+        }
+        printf("\n");
+    }
+
+    printf("\nTotal Page Faults: %d\n", pageFaults);
+    return 0;
+}
