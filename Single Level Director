@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char files[10][20], name[20];
+    int n = 0, i, choice;
+
+    while(1) {
+        printf("\n1. Create File\n2. Display Files\n3. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        if(choice == 1) {
+            printf("Enter file name: ");
+            scanf("%s", name);
+
+            for(i = 0; i < n; i++) {
+                if(strcmp(files[i], name) == 0) {
+                    printf("File already exists!\n");
+                    break;
+                }
+            }
+
+            if(i == n) {
+                strcpy(files[n], name);
+                n++;
+                printf("File created successfully\n");
+            }
+        }
+
+        else if(choice == 2) {
+            if(n == 0)
+                printf("Directory is empty\n");
+            else {
+                printf("Files in directory:\n");
+                for(i = 0; i < n; i++)
+                    printf("%s\n", files[i]);
+            }
+        }
+
+        else if(choice == 3)
+            break;
+
+        else
+            printf("Invalid choice\n");
+    }
+
+    return 0;
+}
