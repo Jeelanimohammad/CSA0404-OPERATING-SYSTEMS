@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>   // <-- IMPORTANT for abs()
+
+int main() {
+    int rq[20], n, head, i;
+    int total_seek = 0;
+
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    printf("Enter request sequence:\n");
+    for(i = 0; i < n; i++)
+        scanf("%d", &rq[i]);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    for(i = 0; i < n; i++) {
+        total_seek += abs(rq[i] - head);
+        head = rq[i];
+    }
+
+    printf("Total seek time = %d\n", total_seek);
+
+    return 0;
+}
