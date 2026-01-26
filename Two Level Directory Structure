@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char user[10][20], file[10][10][20];
+    int ucount = 0, fcount[10] = {0};
+    int u, i, choice;
+
+    while(1) {
+        printf("\n1. Create User\n2. Create File\n3. Display\n4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        if(choice == 1) {
+            printf("Enter user name: ");
+            scanf("%s", user[ucount]);
+            printf("User created successfully\n");
+            ucount++;
+        }
+
+        else if(choice == 2) {
+            printf("Enter user index (0 to %d): ", ucount-1);
+            scanf("%d", &u);
+
+            printf("Enter file name: ");
+            scanf("%s", file[u][fcount[u]]);
+            fcount[u]++;
+            printf("File created successfully\n");
+        }
+
+        else if(choice == 3) {
+            for(i = 0; i < ucount; i++) {
+                printf("\nUser: %s\n", user[i]);
+                for(int j = 0; j < fcount[i]; j++)
+                    printf("  %s\n", file[i][j]);
+            }
+        }
+
+        else if(choice == 4)
+            break;
+
+        else
+            printf("Invalid choice\n");
+    }
+
+    return 0;
+}
