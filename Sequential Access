@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int n, i, rec[20], access;
+
+    printf("Enter number of records in file: ");
+    scanf("%d", &n);
+
+    printf("Enter record numbers (stored sequentially):\n");
+    for(i = 0; i < n; i++)
+        scanf("%d", &rec[i]);
+
+    printf("Enter record to access: ");
+    scanf("%d", &access);
+
+    printf("\nReading records sequentially:\n");
+    for(i = 0; i < n; i++) {
+        printf("Record %d accessed\n", rec[i]);
+        if(rec[i] == access) {
+            printf("\nRequired record %d found\n", access);
+            break;
+        }
+    }
+
+    if(i == n)
+        printf("\nRecord not found\n");
+
+    return 0;
+}
