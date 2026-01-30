@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int nb, nf, i, j;
+    int block[10], file[10], alloc[10];
+
+    printf("Enter number of memory blocks: ");
+    scanf("%d", &nb);
+    printf("Enter block sizes:\n");
+    for(i = 0; i < nb; i++)
+        scanf("%d", &block[i]);
+
+    printf("Enter number of files: ");
+    scanf("%d", &nf);
+    printf("Enter file sizes:\n");
+    for(i = 0; i < nf; i++)
+        scanf("%d", &file[i]);
+
+    for(i = 0; i < nf; i++)
+        alloc[i] = -1;
+
+    /* Worst Fit Allocation */
+    for(i = 0; i < nf; i++) {
+        int worst = -1;
+        for(j = 0; j < nb; j++) {
+            if(block[j] >= file[i]) {
+                if(worst == -1 || block[j] > block[worst])
+                    worst = j;
+            }
+        }
+        if(worst != -1) {
+            alloc[i] = worst;
+            block[worst] -= file[i];
+        }
+    }
+
+    printf("\nFile\tBlock\n");
+    for(i = 0; i < nf; i++) {
+        if(alloc[i] != -1)
+            printf("%d\t%d\n", i+1, alloc[i]+1);
+        else
+            printf("%d\tNot Allocated\n", i+1);
+    }
+
+    return 0;
+}
