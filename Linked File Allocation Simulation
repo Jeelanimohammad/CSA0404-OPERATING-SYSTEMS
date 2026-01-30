@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+struct Block {
+    int data;
+    int next; // index of next block, -1 for end
+};
+
+int main() {
+    int n, i;
+    struct Block disk[20];
+    int start, end;
+
+    printf("Enter number of blocks in the file: ");
+    scanf("%d", &n);
+
+    printf("Enter data for each block:\n");
+    for(i = 0; i < n; i++) {
+        printf("Block %d data: ", i);
+        scanf("%d", &disk[i].data);
+        if(i < n-1)
+            disk[i].next = i+1;  // next block
+        else
+            disk[i].next = -1;   // end of file
+    }
+
+    start = 0;          // pointer to first block
+    end = n-1;          // pointer to last block
+
+    printf("\nFile blocks linked as:\n");
+    i = start;
+    while(i != -1) {
+        printf("Block %d: Data = %d -> Next = %d\n", i, disk[i].data, disk[i].next);
+        i = disk[i].next;
+    }
+
+    return 0;
+}
